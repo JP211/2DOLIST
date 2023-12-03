@@ -2,15 +2,15 @@ import { StyleSheet } from "react-native";
 
 export const s = StyleSheet.create({
     card: {
-        backgroundColor: "#0e2149",
+        backgroundColor: "#000",
         height: 115,
-        marginTop: 52,
-        shadowColor: "blue",
+        marginTop: 60,
+        shadowColor: "#76E2F6",
         shadowOffset: {
             width: 0,
             height: 2,
         },
-        shadowOpacity: 0.25,
+        shadowOpacity: 0.5,
         shadowRadius: 3.84,
 
         elevation: 5,
