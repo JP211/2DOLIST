@@ -14,6 +14,11 @@ export const s = StyleSheet.create({
   },
   footer: {
     height: 70,
+    backgroundColor: "gray",
+  },
+  cardItem: {
+    marginBottom: -55,
+    marginTop: 60,
   },
 
 });

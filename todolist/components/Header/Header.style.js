@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native";
 export const s = StyleSheet.create({
     img: {
         width: 415,
-        height: 145,
+        height: 150,
     },
     subtitle: {
         marginTop: 5,
@@ -12,4 +12,5 @@ export const s = StyleSheet.create({
         fontWeight: "bold",
         color: "#ABABAB",
     },
+
 });
