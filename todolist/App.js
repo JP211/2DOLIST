@@ -8,21 +8,21 @@ import { CardTodo } from "./components/CardTodo/CardTodo";
 
 export default function App() {
   const [todoList, setTodoList] = useState([
-    {id: 1, title: "Read the documentation", isCompleted: true },
-    {id: 2, title: "Learn React Native", isCompleted: false },
-    {id: 3, title: "Build something on your own", isCompleted: false },
-    {id: 4, title: "Get a green square today", isCompleted: true },
-    {id: 5, title: "Push code to Github", isCompleted: false },
-    {id: 6, title: "Create something today", isCompleted: false },
-    {id: 7, title: "Practice everyday", isCompleted: true },
-    {id: 8, title: "Focus. Get to work", isCompleted: false },
-    {id: 9, title: "Stop putting things on hold", isCompleted: false },
-  ])
+    { id: 1, title: "Read the documentation", isCompleted: true },
+    { id: 2, title: "Learn React Native", isCompleted: false },
+    { id: 3, title: "Build something on your own", isCompleted: false },
+    { id: 4, title: "Get a green square today", isCompleted: true },
+    { id: 5, title: "Push code to Github", isCompleted: false },
+    { id: 6, title: "Create something today", isCompleted: false },
+    { id: 7, title: "Practice everyday", isCompleted: true },
+    { id: 8, title: "Focus. Get to work", isCompleted: false },
+    { id: 9, title: "Stop putting things on hold", isCompleted: false },
+  ]);
 
-  function renderTodoList(){
-    return todoList.map((todo) =>  (
-    <View key={todo.id} style={s.cardItem}>
-      <CardTodo onPress={updateTodo} todo={todo}/>
+  function renderTodoList() {
+    return todoList.map((todo) => (
+      <View key={todo.id} style={s.cardItem}>
+        <CardTodo onPress={updateTodo} todo={todo} />
       </View>
     ));
   }
@@ -30,11 +30,16 @@ export default function App() {
   function updateTodo(todo) {
     const updatedTodo = {
       ...todo,
-      isCompleted: !todo.isCompleted
-    }
-    console.log(updatedTodo)
+      isCompleted: !todo.isCompleted,
+    };
+    const updatedTodoList = [...todoList];
+    const indexToUpdate = updatedTodoList.findIndex(
+      (t) => t.id === updateTodo.id
+    );
+    updatedTodoList[indexToUpdate] = updatedTodo;
+    setTodoList(updatedTodoList);
   }
-  
+
   return (
     <SafeAreaProvider>
       <SafeAreaView style={s.app}>
@@ -43,15 +48,12 @@ export default function App() {
         </View>
 
         <View style={s.body}>
-          <ScrollView>
-          {renderTodoList()}
-          </ScrollView>
+          <ScrollView>{renderTodoList()}</ScrollView>
         </View>
 
         <View style={s.footer}>
           <Text>Footer</Text>
         </View>
-
       </SafeAreaView>
     </SafeAreaProvider>
   );
