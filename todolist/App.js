@@ -5,6 +5,7 @@ import { useState } from "react";
 
 import { Header } from "./components/Header/Header";
 import { CardTodo } from "./components/CardTodo/CardTodo";
+import { TabBottomMenu } from "./components/TabBottomMenu/TabBottomMenu";
 
 export default function App() {
   const [todoList, setTodoList] = useState([
@@ -18,6 +19,8 @@ export default function App() {
     { id: 8, title: "Focus. Get to work", isCompleted: false },
     { id: 9, title: "Stop putting things on hold", isCompleted: false },
   ]);
+
+  const [selectedTabName, setSelectedTabName] = useState("all");
 
   function renderTodoList() {
     return todoList.map((todo) => (
@@ -52,7 +55,7 @@ export default function App() {
         </View>
 
         <View style={s.footer}>
-          <Text>Footer</Text>
+          <TabBottomMenu onPress={setSelectedTabName} selectedTabName={selectedTabName} />
         </View>
       </SafeAreaView>
     </SafeAreaProvider>
