@@ -9,15 +9,7 @@ import { TabBottomMenu } from "./components/TabBottomMenu/TabBottomMenu";
 
 export default function App() {
   const [todoList, setTodoList] = useState([
-    { id: 1, title: "Read the documentation", isCompleted: true },
-    { id: 2, title: "Learn React Native", isCompleted: false },
-    { id: 3, title: "Build something on your own", isCompleted: false },
-    { id: 4, title: "Get a green square today", isCompleted: true },
-    { id: 5, title: "Push code to Github", isCompleted: false },
-    { id: 6, title: "Create something today", isCompleted: false },
-    { id: 7, title: "Practice everyday", isCompleted: true },
-    { id: 8, title: "Focus. Get to work", isCompleted: false },
-    { id: 9, title: "Stop putting things on hold", isCompleted: false },
+    
   ]);
 
   const [selectedTabName, setSelectedTabName] = useState("all");
@@ -32,7 +24,7 @@ export default function App() {
         return todoList.filter((todo) => todo.isCompleted);
     }
   }
-  function deleteTodo(todo) {
+  function deleteTodo(todoToDelete) {
     Alert.alert(
       "Delete todo",
       "Are you sure you want to delete this todo item? ",
@@ -41,7 +33,7 @@ export default function App() {
           text: "Delete",
           style: "destructive",
           onPress: () => {
-            console.log("Delete this todo ", todo);
+            setTodoList(todoList.filter(t => t.id !== todoToDelete.id))
           },
         },
         { text: "Cancel", style: "cancel" },
