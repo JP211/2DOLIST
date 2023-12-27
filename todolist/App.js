@@ -6,11 +6,10 @@ import { useState } from "react";
 import { Header } from "./components/Header/Header";
 import { CardTodo } from "./components/CardTodo/CardTodo";
 import { TabBottomMenu } from "./components/TabBottomMenu/TabBottomMenu";
+import { ButtonAdd } from "./components/ButtonAdd/ButtonAdd";
 
 export default function App() {
-  const [todoList, setTodoList] = useState([
-    
-  ]);
+  const [todoList, setTodoList] = useState([]);
 
   const [selectedTabName, setSelectedTabName] = useState("all");
 
@@ -33,7 +32,7 @@ export default function App() {
           text: "Delete",
           style: "destructive",
           onPress: () => {
-            setTodoList(todoList.filter(t => t.id !== todoToDelete.id))
+            setTodoList(todoList.filter((t) => t.id !== todoToDelete.id));
           },
         },
         { text: "Cancel", style: "cancel" },
@@ -71,8 +70,10 @@ export default function App() {
 
         <View style={s.body}>
           <ScrollView>{renderTodoList()}</ScrollView>
+          <ButtonAdd />
         </View>
 
+        
         <View style={s.footer}>
           <TabBottomMenu
             todoList={todoList}
