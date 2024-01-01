@@ -1,9 +1,9 @@
 import { TouchableOpacity, Text } from "react-native";
 import { s } from "./ButtonAdd.style";
 
-export function ButtonAdd() {
+export function ButtonAdd({ onPress }) {
   return (
-    <TouchableOpacity style={s.btn}>
+    <TouchableOpacity onPress={onPress} style={s.btn}>
       <Text style={s.txt}>Add New</Text>
     </TouchableOpacity>
   );

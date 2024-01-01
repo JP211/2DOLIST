@@ -7,11 +7,15 @@ import { Header } from "./components/Header/Header";
 import { CardTodo } from "./components/CardTodo/CardTodo";
 import { TabBottomMenu } from "./components/TabBottomMenu/TabBottomMenu";
 import { ButtonAdd } from "./components/ButtonAdd/ButtonAdd";
+import Dialog from "react-native-dialog";
+import uuid from "react-native-uuid";
+
 
 export default function App() {
   const [todoList, setTodoList] = useState([]);
-
   const [selectedTabName, setSelectedTabName] = useState("all");
+  const [isAddDialogDisplayed, setIsAddDialogDisplayed] = useState(false);
+  const [inputValue, setInputValue] = useState("");
 
   function getFilteredList() {
     switch (selectedTabName) {
@@ -61,6 +65,43 @@ export default function App() {
     setTodoList(updatedTodoList);
   }
 
+  function addTodo() {
+    const newTodo = {
+      id: uuid.v4(),
+      title: inputValue,
+      isCompleted: false,
+    };
+    setTodoList([...todoList, newTodo])
+    setIsAddDialogDisplayed(false);
+    setInputValue("");
+  }
+
+  function renderAddDialog() {
+    return (
+      <Dialog.Container
+        visible={isAddDialogDisplayed}
+        onBackdropPress={() => setIsAddDialogDisplayed(false)}
+      >
+        <Dialog.Title>Add New</Dialog.Title>
+        <Dialog.Description>Enter new todo</Dialog.Description>
+        <Dialog.Input
+          onChangeText={setInputValue}
+          placeholder="Ex: Get shit done"
+        />
+        <Dialog.Button
+          label="Cancel"
+          color="grey"
+          onPress={() => setIsAddDialogDisplayed(false)}
+        />
+        <Dialog.Button 
+        disabled={inputValue.length === 0}
+        label="Save" 
+        onPress={addTodo} 
+        />
+      </Dialog.Container>
+    );
+  }
+
   return (
     <SafeAreaProvider>
       <SafeAreaView style={s.app}>
@@ -70,10 +111,9 @@ export default function App() {
 
         <View style={s.body}>
           <ScrollView>{renderTodoList()}</ScrollView>
-          <ButtonAdd />
+          <ButtonAdd onPress={() => setIsAddDialogDisplayed(true)} />
         </View>
 
-        
         <View style={s.footer}>
           <TabBottomMenu
             todoList={todoList}
@@ -81,6 +121,7 @@ export default function App() {
             selectedTabName={selectedTabName}
           />
         </View>
+        {renderAddDialog()}
       </SafeAreaView>
     </SafeAreaProvider>
   );
