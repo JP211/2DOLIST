@@ -9,8 +9,8 @@ export function TabBottomMenu({ selectedTabName, onPress, todoList }) {
     },
     {
       all: todoList.length,
-      inProgress: 6,
-      done: 6,
+      inProgress: 0,
+      done: 0,
     }
   );
   console.log(countByStatus);
