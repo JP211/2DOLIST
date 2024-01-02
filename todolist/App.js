@@ -99,7 +99,7 @@ export default function App() {
     };
     const updatedTodoList = [...todoList];
     const indexToUpdate = updatedTodoList.findIndex(
-      (t) => t.id === updateTodo.id
+      (t) => t.id === updatedTodo.id
     );
     updatedTodoList[indexToUpdate] = updatedTodo;
     setTodoList(updatedTodoList);
