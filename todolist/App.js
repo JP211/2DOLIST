@@ -1,7 +1,7 @@
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
-import { View, Text, Alert, ScrollView } from "react-native";
+import { View, Alert, ScrollView } from "react-native";
 import { s } from "./App.style";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { Header } from "./components/Header/Header";
 import { CardTodo } from "./components/CardTodo/CardTodo";
@@ -9,13 +9,53 @@ import { TabBottomMenu } from "./components/TabBottomMenu/TabBottomMenu";
 import { ButtonAdd } from "./components/ButtonAdd/ButtonAdd";
 import Dialog from "react-native-dialog";
 import uuid from "react-native-uuid";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
+let isFirstRender = true;
+let isLoadUpdate = false;
 
 export default function App() {
   const [todoList, setTodoList] = useState([]);
   const [selectedTabName, setSelectedTabName] = useState("all");
   const [isAddDialogDisplayed, setIsAddDialogDisplayed] = useState(false);
   const [inputValue, setInputValue] = useState("");
+
+  useEffect(() => {
+    loadTodoList();
+  }, []);
+
+  useEffect(() => {
+    if (!isLoadUpdate) {
+      if (!isFirstRender) {
+        saveTodoList();
+      } else {
+        isFirstRender = false;
+      }
+    } else {
+      isLoadUpdate = false;
+    }
+  }, [todoList]);
+
+  async function loadTodoList() {
+    console.log("LOAD");
+    try {
+      const todoListString = await AsyncStorage.getItem("@todoList");
+      const parsedTodoList = JSON.parse(todoListString);
+      isLoadUpdate = true;
+      setTodoList(parsedTodoList || []);
+    } catch (err) {
+      alert(err);
+    }
+  }
+
+  async function saveTodoList() {
+    console.log("SAVE");
+    try {
+      await AsyncStorage.setItem("@todoList", JSON.stringify(todoList));
+    } catch (err) {
+      alert(err);
+    }
+  }
 
   function getFilteredList() {
     switch (selectedTabName) {
@@ -71,7 +111,7 @@ export default function App() {
       title: inputValue,
       isCompleted: false,
     };
-    setTodoList([...todoList, newTodo])
+    setTodoList([...todoList, newTodo]);
     setIsAddDialogDisplayed(false);
     setInputValue("");
   }
@@ -93,10 +133,10 @@ export default function App() {
           color="grey"
           onPress={() => setIsAddDialogDisplayed(false)}
         />
-        <Dialog.Button 
-        disabled={inputValue.length === 0}
-        label="Save" 
-        onPress={addTodo} 
+        <Dialog.Button
+          disabled={inputValue.length === 0}
+          label="Save"
+          onPress={addTodo}
         />
       </Dialog.Container>
     );
